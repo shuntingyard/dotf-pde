@@ -15,7 +15,7 @@
     ./sleuth.nix
     # ./tagbar.nix
     ./telescope.nix
-    #./treesitter.nix FIXME: Something's deprecated here...
+    ./treesitter.nix # FIXME: Something's deprecated here...
     # ./vimtex.nix
     ./which-key.nix
   ];
