@@ -1,9 +1,6 @@
-{
-  lib,
-  pkgs,
-  ...
-}:
-{
+{ lib
+, ...
+}: {
   # basic layer from my old PDE
 
   globals = {
@@ -19,11 +16,6 @@
 
     providers.wl-copy.enable = true; # TODO qu'est-ce que c'est?
   };
-
-  extraPlugins = [
-    pkgs.vimPlugins.sonokai
-  ];
-  colorscheme = lib.mkDefault "sonokai";
 
   opts = {
     updatetime = 250; # Faster completion

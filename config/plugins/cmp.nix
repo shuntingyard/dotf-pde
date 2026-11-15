@@ -6,26 +6,24 @@
 
   # Dependencies
   #
-  plugins = {
-    # Snippet Engine & its associated nvim-cmp source
-    # https://nix-community.github.io/nixvim/plugins/luasnip/index.html
-    luasnip = {
-      enable = true;
-    };
-
-    # https://nix-community.github.io/nixvim/plugins/cmp-nvim-lsp.html
-    cmp-nvim-lsp = {
-      enable = true;
-    };
-
-    # https://nix-community.github.io/nixvim/plugins/cmp-path.html
-    cmp-path = {
-      enable = true;
-    };
-
-    # and last but not least
-    cmp-buffer.enable = true;
+  # Snippet Engine & its associated nvim-cmp source
+  # https://nix-community.github.io/nixvim/plugins/luasnip/index.html
+  plugins.luasnip = {
+    enable = true;
   };
+
+  # https://nix-community.github.io/nixvim/plugins/cmp-nvim-lsp.html
+  plugins.cmp-nvim-lsp = {
+    enable = true;
+  };
+
+  # https://nix-community.github.io/nixvim/plugins/cmp-path.html
+  plugins.cmp-path = {
+    enable = true;
+  };
+
+  # and last but not least
+  plugins.cmp-buffer.enable = true;
 
   # `friendly-snippets` contains a variety of premade snippets
   #    See the README about individual language/framework/plugin snippets:

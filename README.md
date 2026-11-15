@@ -1,46 +1,23 @@
-# dotf-pde# pde-nixvim
+# dotf-pde
 
-Neovim Personalized Development Environment
+Neovim personalized development environment
 
-## How to use
+## Conventions
 
-You can use this flake as an input:
-
-```nix
-{
-    inputs = {
-        nixvim.url = "github:shuntingyard/dotf-pde"
-    };
-}
-```
-
-You can then install the package either normally or through home-manager.
-
-#### Normal:
-
-```nix
-environment.systemPackages = [
-    inputs.nixvim.packages.x86_64-linux.default
-];
-```
-
-#### Home-Manager
-
-```nix
-home-manager.users.<user>.home.packages = [
-    inputs.nixvim.packages.x86_64-linux.default
-];
-```
+- `personalized.nvim.hm` for nixvim's homeModules
+- `personalized.nvim.nixos` for nixvim's nixosModules (implementation pending!)
+- `personalized.nvim.darwin` for nixvim's nixDarwinModules (implementation pending!)
 
 ## TODO List
 
-- [x] test integration of this standalone nixvim config with main flake.
-- [ ] assert LSP `nixd` has optimal configuration (or even use Rust-based LSP
-    again).
-- [x] fix error encountered when opening `lualine.nix`.
-- [ ] check/integrate plugins yet commented out.
+- [x] Test integration of this standalone nixvim configuration with your main flake.
+- [x] Do scaffolding for a home-manager module
+- [ ] Assert LSP `nixd` has optimal configuration.
+- [ ] Fix error encountered when opening `lualine.nix`.
+    (`luaLoader.enable=false;` doesn't fix!)
+- [ ] Check/integrate plugins yet commented out.
 
 ## Notes on Code commented out
 
-- as imported from old config: `# option`
-- very recently commented: `#option`
+- As imported from old configuration: `# option`
+- Very recently commented: `#option`

@@ -70,12 +70,8 @@
         nixd = {
           enable = true;
           extraOptions = {
-            nixpkgs = {
-              expr = "import <nixpkgs> { }";
-            };
-            formatting = {
-              command = "alejandra";
-            };
+            nixpkgs = { expr = "import <nixpkgs> { }"; };
+            formatting = { command = "alejandra"; };
           };
         };
         #pylyzer.enable = true; # TODO decide whether to keep!

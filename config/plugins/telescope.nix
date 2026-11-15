@@ -8,9 +8,9 @@
 
     keymaps = {
       /*
-        Setting `<Key> = { options.desc = "some description"; ... };`
-        looks like bad practice, as Telescope generates concise
-        descriptions on its own.
+      Setting `<Key> = { options.desc = "some description"; ... };`
+      looks like bad practice, as Telescope generates concise
+      descriptions on its own.
       */
 
       # TODO  check later for availability of Telescope's Themes extension

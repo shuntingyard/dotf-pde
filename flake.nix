@@ -1,41 +1,29 @@
 {
-  description = "Neovim Personalized Development Environment";
-  # Inspired by https://github.com/dc-tec/nixvim/blob/main/flake.nix
+  description = "Basic nixvim config for personalized development environments";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable"; # Just for formatting
+    nixvim.url = "github:nix-community/nixvim";
     flake-parts.url = "github:hercules-ci/flake-parts";
-    nixvim = {
-      url = "github:nix-community/nixvim";
-    };
-    pre-commit-hooks = {
-      url = "github:cachix/pre-commit-hooks.nix";
-    };
   };
 
   outputs =
-    {
-      nixpkgs,
-      nixvim,
-      flake-parts,
-      pre-commit-hooks,
-      ...
-    }@inputs:
+    { nixvim
+    , flake-parts
+    , ...
+    } @ inputs:
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [
-        "aarch64-linux"
         "x86_64-linux"
-        "aarch64-darwin"
+        "aarch64-linux"
         "x86_64-darwin"
+        "aarch64-darwin"
       ];
 
       perSystem =
-        {
-          system,
-          pkgs,
-          self',
-          lib,
-          ...
+        { pkgs
+        , system
+        , ...
         }:
         let
           nixvimLib = nixvim.lib.${system};
@@ -43,7 +31,6 @@
           nixvimModule = {
             inherit pkgs;
             module = import ./config; # import the module directly
-            # You can use `extraSpecialArgs` to pass additional arguments to your module files
             extraSpecialArgs = {
               # inherit (inputs) foo;
             };
@@ -51,26 +38,33 @@
           nvim = nixvim'.makeNixvimWithModule nixvimModule;
         in
         {
+          # to run `nix flake check .`
           checks = {
             default = nixvimLib.check.mkTestDerivationFromNixvimModule nixvimModule;
-            pre-commit-check = pre-commit-hooks.lib.${system}.run {
-              src = ./.;
-              hooks = {
-                statix.enable = true;
-                nixfmt-rfc-style.enable = true;
-              };
-            };
           };
 
-          formatter = pkgs.nixfmt-rfc-style;
-
+          # run `nix run .` to start nixvim
           packages = {
             default = nvim;
           };
 
-          devShells = {
-            default = with pkgs; mkShell { inherit (self'.checks.pre-commit-check) shellHook; };
+          # run `nix fmt`
+          formatter = pkgs.nixpkgs-fmt;
+        };
+
+      # Global flake outputs
+      flake = {
+        homeManagerModules = {
+          default = {
+            imports = [
+              inputs.nixvim.homeModules.nixvim
+              ./modules/home_manager.nix
+            ];
           };
         };
+        nixosModules = {
+          ohbrother = ./modules/nixos.nix;
+        };
+      };
     };
 }

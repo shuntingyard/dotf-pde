@@ -15,7 +15,7 @@
     ./sleuth.nix
     # ./tagbar.nix
     ./telescope.nix
-    ./treesitter.nix
+    #./treesitter.nix FIXME: Something's deprecated here...
     # ./vimtex.nix
     ./which-key.nix
   ];
@@ -35,10 +35,7 @@
     lsp-lines.enable = true; # Render diagnostics as virtual lines.
     nvim-autopairs.enable = true; # () {} []
 
-    colorizer = {
-      enable = true;
-      settings.user_default_options.names = false;
-    };
+    # TODO: What did I use nvim-colorizer for?
 
     oil.enable = true;
 
