@@ -2,6 +2,7 @@
   imports = [
     # ./barbar.nix
     ./cmp.nix # This is a collection of plugins.
+    ./conform-nvim.nix
     # ./efm.nix
     # ./floaterm.nix
     # ./harpoon.nix

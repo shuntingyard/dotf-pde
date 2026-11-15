@@ -17,65 +17,105 @@
             action = "rename";
             desc = "[R]e[n]ame";
           };
+
           "<leader>ca" = {
             action = "code_action";
             desc = "[C]ode [A]ction";
           };
-          "<leader>lf" = {
-            # action.__raw = "vim.lsp.buf.format({ timeout_ms = 5000 })";
-            action = "format";
-            desc = "[L]SP [F]ormat";
-          };
 
           gd = "definition";
+
           gi = "implementation";
           "<leader>D" = {
             action = "type_definition";
             desc = "Type [D]efinition";
           };
+
           gr = "references";
 
           K = "hover";
 
           gD = "declaration";
         };
+
+        extra = [
+          {
+            key = "<leader>lf";
+            # Allow formatting of parts of code under visual mark
+            mode = [ "n" "v" ];
+            # Starting with nu, we'll be using conform-nvim more and more...
+            action = "<cmd>lua require('conform').format({ async = true, lsp_format = 'fallback' })<CR>";
+            options.desc = "[L]SP [F]ormat";
+          }
+        ];
       };
 
       servers = {
         # LS we had before
-        #ansiblels.enable = true; # Do we still need to `:set ft=yaml.ansible`?
-        #bashls.enable = true; # shell scripting
-        #clangd.enable = true; # c, cpp
+
+        #ansiblels.enable = true; # Don't forget to `:set ft=yaml.ansible` !
+        bashls.enable = true; # Shell scripting
+
+        /*
+        Clangd (C / C++). Enable background indexing and clang-tidy checks via cmd flags,
+        and generate a compile_commands.json file
+        (via CMake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON or bear for Make projects)
+        so header resolution works in Nix devShells:
+        */
+        clangd = {
+          enable = true;
+          cmd = [
+            "clangd"
+            "--background-index"
+            "--clang-tidy"
+            "--header-insertion=iwyu"
+            "--completion-style=detailed"
+          ];
+        };
+
         #cssls.enable = true; # CSS
         #docker_compose_language_service.enable = true; # Docker yaml stuff
         #dockerls.enable = true; # dockerfile
         # go omitted for now
         #html.enable = true;
         #jsonls.enable = true; # JSON
+
         lua_ls.enable = true;
-        marksman.enable = true; # markdown
+
+        # Markdown
+        marksman.enable = true;
+
         # powershell omitted for now
-        # pyright omitted!
+
         rust_analyzer = {
           enable = true;
           installCargo = false;
           installRustc = false;
         };
-        # sqlls abandoned in favor of sqls
+
         # TODO should we give `semgrep` another go? (shehackspurple etc)
+
         #yamlls.enable = true; # YAML
 
         # New
         #texlab.enable = true; # LaTeX
+
+        # Nix
         nixd = {
           enable = true;
-          extraOptions = {
+          settings = {
             nixpkgs = { expr = "import <nixpkgs> { }"; };
-            formatting = { command = "alejandra"; };
+            formatting = { command = [ "alejandra" ]; };
           };
         };
-        #pylyzer.enable = true; # TODO decide whether to keep!
-        #ruff.enable = true; # lint and format Python
+
+        # nu - the shell
+        nushell.enable = true;
+
+        # Python stuff
+        ruff.enable = true;
+        ty.enable = true;
+
         #sqls.enable = true; # https://github.com/sqls-server/sqls
       };
     };
